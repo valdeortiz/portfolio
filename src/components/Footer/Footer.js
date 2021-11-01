@@ -10,11 +10,11 @@ const Footer = () => {
       <LinkList>
         <LinkColumn>
           <LinkTitle>Mobile number</LinkTitle>
-          <LinkItem href="https://wa.me/595971921474">+595-971-921-474</LinkItem>
+          <LinkItem target="_blank" href="https://wa.me/595971921474">+595-971-921-474</LinkItem>
         </LinkColumn>
         <LinkColumn>
           <LinkTitle>Email</LinkTitle>
-          <LinkItem href="mailto:contact@valdeortiz.com">
+          <LinkItem target="_blank" href="mailto:contact@valdeortiz.com">
             contact@valdeortiz.com
           </LinkItem>
         </LinkColumn>
@@ -24,16 +24,16 @@ const Footer = () => {
           <Slogan>Software developer from paraguay</Slogan>
         </CompanyContainer>
         <SocialContainer>
-          <SocialIcons href="https://github.com/valdeortiz">
+          <SocialIcons target="_blank" href="https://github.com/valdeortiz">
             <AiFillGithub size="3rem" />
           </SocialIcons>
-          <SocialIcons href="https://gitlab.com/valdeortiz">
+          <SocialIcons target="_blank" href="https://gitlab.com/valdeortiz">
             <AiFillGitlab size="3rem" />
           </SocialIcons>
-          <SocialIcons href="https://www.linkedin.com/in/valdeortiz/">
+          <SocialIcons target="_blank" href="https://www.linkedin.com/in/valdeortiz/">
             <AiFillLinkedin size="3rem" />
           </SocialIcons>
-          <SocialIcons href="https://wa.me/595971921474">
+          <SocialIcons target="_blank" href="https://wa.me/595971921474">
             <AiFillPhone size="3rem" />
           </SocialIcons>
         </SocialContainer>

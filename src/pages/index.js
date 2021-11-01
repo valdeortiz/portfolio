@@ -11,7 +11,10 @@ const Home = () => {
   return (
     <Layout>
       <Section grid>
-        <Hero />
+        <Hero handleClick={(e) => {
+          // e.preventDefault();
+          window.location.href="https://wa.me/595971921474";
+      }}/>
         <BgAnimation />
       </Section>
       {/* <Projects /> */}
