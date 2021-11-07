@@ -9,7 +9,9 @@ import { Section } from '../styles/GlobalComponents';
 
 const Home = () => {
   return (
+    
     <Layout>
+      
       <Section grid>
         <Hero handleClick={(e) => {
           // e.preventDefault();
@@ -17,8 +19,8 @@ const Home = () => {
       }}/>
         <BgAnimation />
       </Section>
-      {/* <Projects /> */}
-      <Technologies />
+      <Projects />
+      {/* <Technologies /> */}
       <Timeline />
       {/* <Acomplishments /> */}
     </Layout>
