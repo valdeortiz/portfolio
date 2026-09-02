@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Design tokens (Tailwind v4, configuración CSS-first).
+   Cada token queda disponible como utilidad: bg-surface, text-accent…
+   --------------------------------------------------------------- */
+@theme {
+  --color-canvas: #070b14;
+  --color-surface: #0f1624;
+  --color-surface-2: #161f33;
+  --color-line: #23304d;
+
+  --color-ink: #f2f6fb;
+  --color-muted: #93a3bd;
+
+  --color-accent: #fec078;
+  --color-accent-strong: #ffa63d;
+  --color-cool: #4aa8ff;
+
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+  --animate-pulse-slow: pulse-slow 6s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(4%, -6%, 0) scale(1.15); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.75; }
+}
+
+/* ---------------------------------------------------------------
+   Base
+   --------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Lenis toma el control del scroll; sin esto pelea con el nativo. */
+  scrollbar-gutter: stable;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-canvas);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------
+   Utilidades propias
+   --------------------------------------------------------------- */
+@utility text-gradient {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-ink) 0%,
+    var(--color-accent) 55%,
+    var(--color-cool) 100%
+  );
+  background-clip: text;
+  color: transparent;
+}
+
+/* Difuminado en los bordes de la cinta infinita. */
+@utility mask-fade-x {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+/* ---------------------------------------------------------------
+   Accesibilidad: nadie debería marearse con el portafolio.
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
