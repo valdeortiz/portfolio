@@ -56,7 +56,7 @@ export function Contact() {
           </ul>
         </Reveal>
 
-        <Reveal direction="left">
+        {/* <Reveal direction="left">
           <figure className="radial-glow flex flex-col items-center justify-center p-8 md:p-14">
             <Image
               src={site.avatar}
@@ -72,7 +72,7 @@ export function Contact() {
               </SectionSubText>
             </figcaption>
           </figure>
-        </Reveal>
+        </Reveal> */}
       </div>
 
       <SectionDivider alt className="my-10" />
