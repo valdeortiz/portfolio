@@ -21,8 +21,7 @@ export function Stack() {
       <Reveal>
         <SectionTitle>En qué trabajo</SectionTitle>
         <SectionText>
-          Las herramientas que uso a diario, ordenadas por el peso que tienen en
-          mi trabajo.
+          Las herramientas que uso a diario.
         </SectionText>
       </Reveal>
 

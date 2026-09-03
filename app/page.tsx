@@ -1,5 +1,6 @@
 import { Contact } from "@/components/sections/contact";
 import { Hero } from "@/components/sections/hero";
+import { Projects } from "@/components/sections/projects";
 import { Stack } from "@/components/sections/stack";
 import { Timeline } from "@/components/sections/timeline";
 import { site, socials } from "@/lib/site";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <Hero />
       <Stack />
       <Timeline />
+      <Projects />
       <Contact />
     </>
   );

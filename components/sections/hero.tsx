@@ -13,12 +13,16 @@ export function Hero() {
       <div className="w-full">
         <SectionTitle as="h1" main>
           {site.name}
-          <br />
-          {site.welcome}
+          {/* <br /> */}
+          {/* {site.welcome} */}
         </SectionTitle>
 
         <SectionText>
-          {site.role} de {site.location}. {site.tagline}
+          {site.role}
+          <br />
+          {site.tagline}
+          <br />
+          {site.location}.
         </SectionText>
 
         <div className="flex flex-col gap-4 pb-8 sm:flex-row sm:items-center sm:gap-6 md:pb-20">

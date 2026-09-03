@@ -69,7 +69,7 @@ export function Contact() {
             />
             <figcaption className="mt-6 text-center">
               <SectionSubText>
-                {site.name} — {site.role} de {site.location}.
+                {site.name} — {site.role}
               </SectionSubText>
             </figcaption>
           </figure>

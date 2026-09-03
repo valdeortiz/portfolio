@@ -9,15 +9,15 @@ export const site = {
   name: "Valdemar Ortiz",
   shortName: "Valdemar Ortiz",
   role: "Software Developer",
-  location: "Paraguay",
+  location: "Asunción, Paraguay",
   /** Segunda línea del título del hero. */
-  welcome: "Bienvenido a mi portafolio",
-  tagline: "Backend y mobile, de la idea a producción.",
+  // welcome: "Bienvenido a mi portafolio",
+  tagline: "De la idea a producción.",
   description:
-    "Software developer de Paraguay. Construyo backends con Python y aplicaciones móviles con Flutter, desde el diseño de la API hasta el deploy.",
+    "Software developer",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://valdeortiz.com",
   locale: "es_PY",
-  email: "contact@valdeortiz.com",
+  email: "valdeortiz15@gmail.com",
   phone: "+595 971 921 474",
   whatsapp: "https://wa.me/595971921474",
   avatar: "/images/profile.jpeg",
@@ -60,6 +60,7 @@ export const socials: readonly Social[] = [
 export const nav = [
   { label: "Tecnologías", href: "#tech" },
   { label: "Sobre mí", href: "#about" },
+  { label: "Proyectos", href: "#proyectos" },
   { label: "Contacto", href: "#contacto" },
 ] as const;
 
@@ -94,6 +95,39 @@ export const skills: readonly Skill[] = [
     summary: "Persistencia y despliegue: donde el proyecto deja de ser local.",
     items: ["PostgreSQL", "MongoDB", "Docker", "Linux"],
     icon: "data",
+  },
+];
+
+export type Project = {
+  title: string;
+  description: string;
+  image: string;
+  href: string;
+};
+
+/**
+ * PLACEHOLDER: reemplazar por proyectos reales.
+ * Pasame título, descripción, imagen (ruta en public/images) y link de cada
+ * uno y los cambio acá. Mientras tanto uso el avatar como imagen temporal.
+ */
+export const projects: readonly Project[] = [
+  {
+    title: "Proyecto 1 (completar)",
+    description: "Completar con una descripción breve de este proyecto: qué hace y con qué se construyó.",
+    image: "/images/profile.jpeg",
+    href: "#",
+  },
+  {
+    title: "Proyecto 2 (completar)",
+    description: "Completar con una descripción breve de este proyecto: qué hace y con qué se construyó.",
+    image: "/images/profile.jpeg",
+    href: "#",
+  },
+  {
+    title: "Proyecto 3 (completar)",
+    description: "Completar con una descripción breve de este proyecto: qué hace y con qué se construyó.",
+    image: "/images/profile.jpeg",
+    href: "#",
   },
 ];
 

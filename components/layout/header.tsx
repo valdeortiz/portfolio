@@ -24,14 +24,15 @@ export function Header() {
 
       <nav
         aria-label="Principal"
-        className="col-start-2 col-end-6 row-start-2 sm:col-start-2 sm:col-end-4 sm:row-start-1"
+        className="col-start-2 col-end-6 row-start-2 sm:col-start-2 sm:col-end-5 sm:row-start-1"
       >
-        <ul className="flex list-none justify-around">
+        {/* Con 4 ítems, si no entran en una fila se acomodan en dos en vez de desbordar. */}
+        <ul className="flex flex-wrap list-none justify-center gap-x-1 sm:flex-nowrap sm:justify-around sm:gap-0">
           {nav.map((item) => (
             <li key={item.href}>
               <a
                 href={item.href}
-                className="p-2 text-base leading-8 text-muted transition-colors duration-[400ms] hover:text-white sm:p-0 sm:text-xl"
+                className="p-2 text-sm leading-8 text-muted transition-colors duration-[400ms] hover:text-white sm:p-0 sm:text-base lg:text-xl"
               >
                 {item.label}
               </a>
