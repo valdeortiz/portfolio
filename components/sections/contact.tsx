@@ -19,7 +19,6 @@ import { site, socials } from "@/lib/site";
 export function Contact() {
   return (
     <Section id="contacto">
-      <SectionDivider className="my-10" />
 
       <div className="grid items-center gap-8 md:grid-cols-[1.3fr_1fr]">
         <Reveal>

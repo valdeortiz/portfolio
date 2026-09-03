@@ -9,20 +9,25 @@ import {
 } from "@/components/ui/section";
 import { projects } from "@/lib/site";
 
-/** Tarjeta: imagen arriba, título y descripción abajo. Todo el bloque es un link. */
+/**
+ * Tarjeta: imagen arriba, título y descripción abajo.
+ * Si el proyecto tiene href válido, todo el bloque es un link;
+ * si el href está vacío o es "#", se renderiza como bloque no clickeable.
+ */
 function ProjectCard({
   project,
 }: {
   project: (typeof projects)[number];
 }) {
-  const external = project.href.startsWith("http");
+  const href = project.href.trim();
+  const hasLink = href !== "" && href !== "#";
+  const external = href.startsWith("http");
 
-  return (
-    <a
-      href={project.href}
-      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-      className="group flex w-64 shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-300 hover:border-accent sm:w-80"
-    >
+  const className =
+    "group flex w-64 shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-300 sm:w-80";
+
+  const content = (
+    <>
       <div className="relative aspect-video w-full overflow-hidden bg-canvas">
         <Image
           src={project.image}
@@ -40,6 +45,20 @@ function ProjectCard({
           {project.description}
         </p>
       </div>
+    </>
+  );
+
+  if (!hasLink) {
+    return <div className={className}>{content}</div>;
+  }
+
+  return (
+    <a
+      href={href}
+      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+      className={`${className} hover:border-accent`}
+    >
+      {content}
     </a>
   );
 }

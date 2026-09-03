@@ -6,7 +6,6 @@ import clsx from "clsx";
 
 import {
   Section,
-  SectionDivider,
   SectionText,
   SectionTitle,
 } from "@/components/ui/section";
@@ -157,8 +156,6 @@ export function Timeline() {
           </button>
         ))}
       </div>
-
-      <SectionDivider className="mb-10" />
     </Section>
   );
 }

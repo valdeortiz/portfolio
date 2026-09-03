@@ -18,7 +18,7 @@ export function Header() {
           className="flex items-center gap-2 text-ink transition-colors hover:text-accent"
         >
           <LogoMark className="h-[30px] w-[30px] shrink-0" />
-          <span className="text-lg font-semibold">Portfolio</span>
+          <span className="text-lg font-semibold">HOLA 👋</span>
         </Link>
       </div>
 

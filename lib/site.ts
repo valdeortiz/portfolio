@@ -75,13 +75,13 @@ export const skills: readonly Skill[] = [
   {
     area: "Back-End",
     summary: "Mi terreno principal: APIs, modelos de datos y servicios en producción.",
-    items: ["Python", "Django", "FastAPI", "REST", "Docker"],
+    items: ["Python", "Django", "FastAPI"],
     icon: "backend",
   },
   {
     area: "Mobile",
     summary: "Apps multiplataforma publicadas en tiendas, de la UI al release.",
-    items: ["Flutter", "Dart", "Google Play"],
+    items: ["Flutter", "Dart", "Google Play", "iOS"],
     icon: "mobile",
   },
   {
@@ -121,7 +121,7 @@ export const projects: readonly Project[] = [
     title: "App BASA",
     description: "Aplicación móvil para el Banco BASA, con funcionalidades de home banking, pagos, transferencias y más.",
     image: "/images/basa.png",
-    href: "https://play.google.com/store/apps/details?id=com.basa.basaapp&hl=en",
+    href: "https://www.bancobasa.com.py/",
   },
   {
     title: "Pagsa control de acceso",
@@ -134,6 +134,12 @@ export const projects: readonly Project[] = [
     description: "Desarrollo backend de aplicaciones web robustas y escalables para Claro Video, plataforma de streaming de alto trafico.",
     image: "/images/claro.png",
     href: "https://www.clarovideo.com/",
+  },
+  {
+    title: "Telefonica IOT",
+    description: "Plataforma IoT para el monitoreo y gestión de dispositivos conectados para ciudades inteligentes.",
+    image: "/images/telefonica.jpg",
+    href: "#",
   },
 ];
 
