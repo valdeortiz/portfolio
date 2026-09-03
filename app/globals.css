@@ -113,6 +113,25 @@ body {
   mask-image: linear-gradient(to right, black, transparent);
 }
 
+/* Los bordes del carrusel de proyectos se desvanecen para que las tarjetas
+   entren y salgan de escena sin cortarse en seco. */
+@utility edge-fade-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 2.5rem,
+    black calc(100% - 2.5rem),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 2.5rem,
+    black calc(100% - 2.5rem),
+    transparent
+  );
+}
+
 /* Carrusel táctil sin barra de scroll a la vista. */
 @utility no-scrollbar {
   scrollbar-width: none;
