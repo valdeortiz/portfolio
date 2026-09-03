@@ -1,110 +1,62 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import clsx from "clsx";
 
-import { nav, site } from "@/lib/site";
+import { LogoMark, socialIcons } from "@/components/ui/icons";
+import { nav, socials } from "@/lib/site";
 
+/**
+ * Cabecera del diseño original: una grilla de cinco columnas con la marca a la
+ * izquierda, los enlaces al centro y las redes a la derecha. En pantallas
+ * chicas se parte en dos filas (marca + redes arriba, enlaces abajo), así que
+ * no hace falta menú hamburguesa ni JavaScript: es un Server Component.
+ */
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (value) => {
-    setScrolled(value > 24);
-  });
-
   return (
-    <header
-      className={clsx(
-        "fixed inset-x-0 top-0 z-40 transition-all duration-300",
-        scrolled
-          ? "border-b border-line/60 bg-canvas/70 backdrop-blur-xl"
-          : "border-b border-transparent",
-      )}
-    >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+    <header className="mx-auto grid w-full max-w-[1280px] grid-cols-5 grid-rows-[repeat(2,60px)] items-center gap-2 p-2.5 pt-5 sm:grid-rows-1 sm:gap-x-8">
+      <div className="col-start-1 col-end-3 row-start-1 flex items-center sm:col-end-2">
         <Link
           href="/"
-          className="group flex items-center gap-2 font-mono text-sm tracking-tight"
+          className="flex items-center gap-2 text-ink transition-colors hover:text-accent"
         >
-          <span className="grid h-8 w-8 place-items-center rounded-md border border-line bg-surface text-accent transition-colors group-hover:border-accent">
-            VO
-          </span>
-          <span className="hidden text-muted transition-colors group-hover:text-ink sm:block">
-            {site.name.toLowerCase().replace(" ", "")}
-          </span>
+          <LogoMark className="h-[30px] w-[30px] shrink-0" />
+          <span className="text-lg font-semibold">Portfolio</span>
         </Link>
-
-        <nav className="hidden items-center gap-1 md:flex">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="relative rounded-full px-4 py-2 text-sm text-muted transition-colors hover:text-ink"
-            >
-              {item.label}
-            </a>
-          ))}
-          <a
-            href={site.whatsapp}
-            target="_blank"
-            rel="noreferrer"
-            className="ml-2 rounded-full bg-accent px-4 py-2 text-sm font-medium text-canvas transition-transform hover:scale-105"
-          >
-            Hablemos
-          </a>
-        </nav>
-
-        <button
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          aria-expanded={open}
-          aria-label="Abrir menú"
-          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-md border border-line md:hidden"
-        >
-          <span
-            className={clsx(
-              "h-px w-5 bg-ink transition-transform duration-300",
-              open && "translate-y-[3px] rotate-45",
-            )}
-          />
-          <span
-            className={clsx(
-              "h-px w-5 bg-ink transition-transform duration-300",
-              open && "-translate-y-[3px] -rotate-45",
-            )}
-          />
-        </button>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-line/60 bg-canvas/95 backdrop-blur-xl md:hidden"
-          >
-            <ul className="flex flex-col gap-1 px-6 py-4">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="block py-2 text-lg text-muted transition-colors hover:text-accent"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      <nav
+        aria-label="Principal"
+        className="col-start-2 col-end-6 row-start-2 sm:col-start-2 sm:col-end-4 sm:row-start-1"
+      >
+        <ul className="flex list-none justify-around">
+          {nav.map((item) => (
+            <li key={item.href}>
+              <a
+                href={item.href}
+                className="p-2 text-base leading-8 text-muted transition-colors duration-[400ms] hover:text-white sm:p-0 sm:text-xl"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div className="col-start-4 col-end-6 row-start-1 flex items-center justify-around sm:col-start-5 sm:col-end-6">
+        {socials.map((social) => {
+          const Icon = socialIcons[social.icon];
+          return (
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={social.label}
+              className="rounded-full p-1 text-white transition duration-300 hover:scale-[1.2] hover:bg-surface-2 sm:p-2"
+            >
+              <Icon className="h-[22px] w-[22px] sm:h-[26px] sm:w-[26px]" />
+            </a>
+          );
+        })}
+      </div>
     </header>
   );
 }

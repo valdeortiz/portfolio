@@ -1,45 +1,67 @@
 import { Reveal } from "@/components/motion/reveal";
-import { SectionHeading } from "@/components/sections/section-heading";
+import { skillIcons } from "@/components/ui/icons";
+import {
+  Section,
+  SectionDivider,
+  SectionText,
+  SectionTitle,
+} from "@/components/ui/section";
 import { skills } from "@/lib/site";
 
+/**
+ * Sección "Technologies" del diseño original: divisor, título, bajada y una
+ * lista de áreas con ícono. En mobile cada ítem se acuesta (ícono a la
+ * izquierda) y en pantallas grandes queda en columna dentro de una grilla.
+ */
 export function Stack() {
   return (
-    <section id="stack" className="scroll-mt-24 py-28 sm:py-36">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading
-          eyebrow="Stack"
-          title="En qué trabajo"
-          description="Las herramientas que uso a diario, ordenadas por el peso que tienen en mi trabajo."
-        />
+    <Section id="tech">
+      <SectionDivider className="my-10" />
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
-          {skills.map((skill, index) => (
-            <Reveal key={skill.area} delay={index * 0.08}>
-              <article className="group h-full bg-surface p-8 transition-colors duration-300 hover:bg-surface-2">
-                <div className="flex items-baseline justify-between">
-                  <h3 className="text-xl font-medium">{skill.area}</h3>
-                  <span className="font-mono text-xs text-muted/50">
-                    0{index + 1}
-                  </span>
+      <Reveal>
+        <SectionTitle>En qué trabajo</SectionTitle>
+        <SectionText>
+          Las herramientas que uso a diario, ordenadas por el peso que tienen en
+          mi trabajo.
+        </SectionText>
+      </Reveal>
+
+      <Reveal>
+        <ul className="my-8 flex list-none flex-col sm:my-16 sm:grid sm:grid-cols-3 sm:gap-6 md:gap-10 lg:my-[30px]">
+          {skills.map((skill) => {
+            const Icon = skillIcons[skill.icon];
+            return (
+              <li
+                key={skill.area}
+                className="mb-3.5 flex max-w-[320px] flex-row sm:mb-0 sm:max-w-[203px] sm:flex-col md:max-w-[320px]"
+              >
+                <Icon className="h-[30px] w-[30px] shrink-0 text-accent" />
+
+                <div className="ml-[18px] flex flex-col sm:ml-0 sm:mt-3">
+                  <h3 className="mb-1 text-xl leading-7 font-bold tracking-[0.02em] text-white sm:mb-2 sm:text-2xl md:text-[28px] md:leading-8">
+                    {skill.area}
+                  </h3>
+                  <p className="text-sm leading-[22px] text-muted sm:text-base sm:leading-7 md:text-lg md:leading-[30px]">
+                    {skill.summary}
+                  </p>
+                  <ul className="mt-3 flex list-none flex-wrap gap-2">
+                    {skill.items.map((item) => (
+                      <li
+                        key={item}
+                        className="rounded-full border border-edge px-2.5 py-0.5 text-xs leading-5 text-muted"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {skill.summary}
-                </p>
-                <ul className="mt-6 flex flex-wrap gap-2">
-                  {skill.items.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-full border border-line bg-canvas/60 px-3 py-1 font-mono text-xs text-muted transition-colors group-hover:border-accent/40 group-hover:text-ink"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
+              </li>
+            );
+          })}
+        </ul>
+      </Reveal>
+
+      <SectionDivider alt />
+    </Section>
   );
 }

@@ -1,50 +1,105 @@
 import Link from "next/link";
+
+import { socialIcons } from "@/components/ui/icons";
 import { site, socials } from "@/lib/site";
+
+/** Enlace de columna: se corre un poco a la derecha al pasar el mouse. */
+function FooterLink({
+  href,
+  external,
+  children,
+}: {
+  href: string;
+  external?: boolean;
+  children: React.ReactNode;
+}) {
+  const className =
+    "mb-2 flex items-center text-xs leading-5 text-muted transition duration-300 hover:translate-x-1.5 hover:text-white sm:mb-4 sm:text-base sm:leading-7 md:text-lg md:leading-[30px]";
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer" className={className}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
+
+function FooterColumn({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex w-full max-w-[220px] flex-col">
+      <h3 className="mb-2 text-[10px] leading-3 font-semibold tracking-wide uppercase text-faint sm:mb-4 sm:text-xs sm:leading-6">
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
 
 export function Footer() {
   return (
-    <footer className="border-t border-line/60 bg-surface/30">
-      <div className="mx-auto max-w-6xl px-6 py-14">
-        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
-          <div className="max-w-sm">
-            <p className="font-mono text-sm text-accent">{site.name}</p>
-            <p className="mt-3 text-sm leading-relaxed text-muted">
-              {site.role} de {site.location}. {site.tagline}
-            </p>
-          </div>
+    <footer className="mx-auto mt-2.5 w-full max-w-[1040px] px-4 pt-5 pb-10 sm:px-12">
+      <div className="grid grid-cols-[repeat(3,minmax(85px,220px))] gap-[5px] border-t border-line px-1 pt-8 pb-4 sm:gap-4 md:gap-10 lg:pt-10 lg:pb-7">
+        <FooterColumn title="Teléfono">
+          <FooterLink href={site.whatsapp} external>
+            {site.phone}
+          </FooterLink>
+        </FooterColumn>
 
-          <nav aria-label="Redes">
-            <ul className="grid grid-cols-2 gap-x-10 gap-y-3 text-sm">
-              {socials.map((social) => (
-                <li key={social.label}>
-                  <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group inline-flex flex-col"
-                  >
-                    <span className="text-muted transition-colors group-hover:text-accent">
-                      {social.label}
-                    </span>
-                    <span className="font-mono text-xs text-muted/60">
-                      {social.handle}
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
+        <FooterColumn title="Email">
+          <FooterLink href={`mailto:${site.email}`}>{site.email}</FooterLink>
+        </FooterColumn>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-line/60 pt-6 text-xs text-muted/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} {site.name}
-          </p>
-          <Link href="/condiciones" className="transition-colors hover:text-accent">
-            Bases y condiciones
-          </Link>
-        </div>
+        <FooterColumn title="Legal">
+          {/* Requisito de Google Play para las apps publicadas. */}
+          <FooterLink href="/condiciones">Bases y condiciones</FooterLink>
+        </FooterColumn>
       </div>
+
+      <div className="flex w-full max-w-[1040px] flex-col justify-between sm:flex-row">
+        <div className="mb-8 flex flex-col items-center sm:mr-auto sm:mb-0 sm:flex-wrap sm:items-baseline">
+          <p className="min-w-[100px] p-2.5 text-sm leading-[22px] tracking-[0.02em] text-faint sm:min-w-[280px] sm:text-base sm:leading-7 md:text-lg md:leading-[30px]">
+            {site.role} de {site.location}
+          </p>
+        </div>
+
+        <nav
+          aria-label="Redes"
+          className="flex flex-wrap items-center justify-center sm:pr-4"
+        >
+          {socials.map((social) => {
+            const Icon = socialIcons[social.icon];
+            return (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.label}
+                className="rounded-full p-2 text-white transition duration-300 hover:scale-[1.2] hover:bg-surface-2"
+              >
+                <Icon className="h-[26px] w-[26px]" />
+              </a>
+            );
+          })}
+        </nav>
+      </div>
+
+      <p className="mt-6 px-2.5 text-xs text-faint">
+        © {new Date().getFullYear()} {site.name}
+      </p>
     </footer>
   );
 }

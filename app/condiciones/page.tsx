@@ -52,15 +52,15 @@ const terms = [
 
 export default function CondicionesPage() {
   return (
-    <article className="mx-auto max-w-3xl px-6 pt-36 pb-28">
+    <article className="mx-auto max-w-3xl px-4 pt-12 pb-20 sm:px-12">
       <Link
         href="/"
-        className="font-mono text-sm text-muted transition-colors hover:text-accent"
+        className="text-sm text-muted transition-colors hover:text-accent"
       >
         ← Volver
       </Link>
 
-      <h1 className="mt-8 text-4xl font-semibold tracking-tight sm:text-5xl">
+      <h1 className="text-gradient mt-8 text-4xl font-extrabold sm:text-5xl">
         Bases y Condiciones de Uso
       </h1>
       <p className="mt-4 text-muted">
@@ -71,7 +71,7 @@ export default function CondicionesPage() {
         {terms.map((term, index) => (
           <li key={term.title}>
             <h2 className="text-xl font-medium">
-              <span className="mr-2 font-mono text-accent">{index + 1}.</span>
+              <span className="mr-2 text-accent">{index + 1}.</span>
               {term.title}
             </h2>
             <p className="mt-3 leading-relaxed text-muted">{term.body}</p>

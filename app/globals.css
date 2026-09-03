@@ -2,42 +2,31 @@
 
 /* ---------------------------------------------------------------
    Design tokens (Tailwind v4, configuración CSS-first).
-   Cada token queda disponible como utilidad: bg-surface, text-accent…
+   Los valores vienen del tema de la rama `master` (styled-components):
+   fondo azul noche + la tríada turquesa → violeta → naranja que aparece
+   en botones, divisores y en la animación del hero.
    --------------------------------------------------------------- */
 @theme {
-  --color-canvas: #070b14;
-  --color-surface: #0f1624;
-  --color-surface-2: #161f33;
-  --color-line: #23304d;
+  --color-canvas: #0f1624; /* background1 del tema original */
+  --color-surface: #0e131f; /* tarjetas del carrusel en mobile */
+  --color-surface-2: #212d45; /* hover de los íconos sociales */
+  --color-line: #272e3c; /* ≈ blanco 10% sobre el fondo */
+  --color-edge: #5e636d; /* ≈ blanco 33%, borde de los botones outline */
 
-  --color-ink: #f2f6fb;
-  --color-muted: #93a3bd;
+  --color-ink: #f2f5f7; /* primary1 */
+  --color-muted: #c2c6cc; /* ≈ blanco 75% */
+  --color-faint: #878b92; /* ≈ blanco 50% */
 
-  --color-accent: #fec078;
-  --color-accent-strong: #ffa63d;
-  --color-cool: #4aa8ff;
+  --color-accent: #fec576; /* accent1 */
+
+  /* Tríada de marca: se combinan siempre de derecha a izquierda (270deg). */
+  --color-teal: #13adc7;
+  --color-purple: #945dd6;
+  --color-flame: #f46737;
+  --color-cyan: #00dbd8;
+  --color-violet: #b133ff;
 
   --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
-
-  --animate-marquee: marquee 38s linear infinite;
-  --animate-drift: drift 22s ease-in-out infinite alternate;
-  --animate-pulse-slow: pulse-slow 6s ease-in-out infinite;
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
-}
-
-@keyframes drift {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(4%, -6%, 0) scale(1.15); }
-}
-
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 0.75; }
 }
 
 /* ---------------------------------------------------------------
@@ -83,26 +72,53 @@ body {
 /* ---------------------------------------------------------------
    Utilidades propias
    --------------------------------------------------------------- */
+
+/* Títulos del diseño original: blanco que se desvanece en diagonal. */
 @utility text-gradient {
   background-image: linear-gradient(
-    100deg,
-    var(--color-ink) 0%,
-    var(--color-accent) 55%,
-    var(--color-cool) 100%
+    121.57deg,
+    #ffffff 18.77%,
+    rgb(255 255 255 / 0.66) 60.15%
   );
+  -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Difuminado en los bordes de la cinta infinita. */
-@utility mask-fade-x {
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 12%,
-    black 88%,
-    transparent
+/* Misma idea, pero para textos cortos (años del carrusel): el degradado
+   tiene que transicionar antes para que se note en tan poco ancho. */
+@utility text-gradient-tight {
+  background-image: linear-gradient(
+    121.57deg,
+    #ffffff 10%,
+    rgb(255 255 255 / 0.66) 30.15%
   );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Halo detrás de la foto, tomado del ImageContainer original. */
+@utility radial-glow {
+  background-image: radial-gradient(
+    50% 50% at 50% 50%,
+    rgb(79 108 176 / 0.25) 53.8%,
+    rgb(79 108 176 / 0) 100%
+  );
+}
+
+/* La línea que acompaña a cada año del carrusel se apaga hacia la derecha. */
+@utility line-fade {
+  -webkit-mask-image: linear-gradient(to right, black, transparent);
+  mask-image: linear-gradient(to right, black, transparent);
+}
+
+/* Carrusel táctil sin barra de scroll a la vista. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* ---------------------------------------------------------------

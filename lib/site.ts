@@ -1,3 +1,5 @@
+import type { SkillIconName, SocialIconName } from "@/components/ui/icons";
+
 /**
  * Fuente única de verdad del contenido del sitio.
  * Editá este archivo para actualizar el portafolio: los componentes leen de acá.
@@ -8,6 +10,8 @@ export const site = {
   shortName: "Valdemar Ortiz",
   role: "Software Developer",
   location: "Paraguay",
+  /** Segunda línea del título del hero. */
+  welcome: "Bienvenido a mi portafolio",
   tagline: "Backend y mobile, de la idea a producción.",
   description:
     "Software developer de Paraguay. Construyo backends con Python y aplicaciones móviles con Flutter, desde el diseño de la API hasta el deploy.",
@@ -19,16 +23,43 @@ export const site = {
   avatar: "/images/profile.jpeg",
 } as const;
 
-export const socials = [
-  { label: "GitHub", href: "https://github.com/valdeortiz", handle: "@valdeortiz" },
-  { label: "GitLab", href: "https://gitlab.com/valdeortiz", handle: "@valdeortiz" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/valdeortiz/", handle: "in/valdeortiz" },
-  { label: "WhatsApp", href: site.whatsapp, handle: site.phone },
-] as const;
+export type Social = {
+  label: string;
+  href: string;
+  handle: string;
+  icon: SocialIconName;
+};
+
+export const socials: readonly Social[] = [
+  {
+    label: "GitHub",
+    href: "https://github.com/valdeortiz",
+    handle: "@valdeortiz",
+    icon: "github",
+  },
+  {
+    label: "GitLab",
+    href: "https://gitlab.com/valdeortiz",
+    handle: "@valdeortiz",
+    icon: "gitlab",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/valdeortiz/",
+    handle: "in/valdeortiz",
+    icon: "linkedin",
+  },
+  {
+    label: "WhatsApp",
+    href: site.whatsapp,
+    handle: site.phone,
+    icon: "whatsapp",
+  },
+];
 
 export const nav = [
-  { label: "Stack", href: "#stack" },
-  { label: "Trayectoria", href: "#trayectoria" },
+  { label: "Tecnologías", href: "#tech" },
+  { label: "Sobre mí", href: "#about" },
   { label: "Contacto", href: "#contacto" },
 ] as const;
 
@@ -36,6 +67,7 @@ export type Skill = {
   area: string;
   summary: string;
   items: readonly string[];
+  icon: SkillIconName;
 };
 
 export const skills: readonly Skill[] = [
@@ -43,37 +75,27 @@ export const skills: readonly Skill[] = [
     area: "Back-End",
     summary: "Mi terreno principal: APIs, modelos de datos y servicios en producción.",
     items: ["Python", "Django", "FastAPI", "REST", "Docker"],
+    icon: "backend",
   },
   {
     area: "Mobile",
     summary: "Apps multiplataforma publicadas en tiendas, de la UI al release.",
     items: ["Flutter", "Dart", "Google Play"],
+    icon: "mobile",
   },
   {
     area: "Front-End",
     summary: "Interfaces que consumen mis propias APIs, con foco en lo funcional.",
     items: ["React", "Next.js", "Angular", "TypeScript"],
+    icon: "frontend",
   },
   {
     area: "Datos e Infra",
     summary: "Persistencia y despliegue: donde el proyecto deja de ser local.",
     items: ["PostgreSQL", "MongoDB", "Docker", "Linux"],
+    icon: "data",
   },
 ];
-
-/** Cinta animada del hero. */
-export const marquee = [
-  "Python",
-  "Django",
-  "FastAPI",
-  "Flutter",
-  "PostgreSQL",
-  "MongoDB",
-  "Docker",
-  "React",
-  "Next.js",
-  "TypeScript",
-] as const;
 
 export type Milestone = {
   year: string;

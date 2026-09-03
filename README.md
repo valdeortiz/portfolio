@@ -67,21 +67,36 @@ app/
   opengraph-image.tsx   Imagen social generada en build
   sitemap.ts robots.ts  SEO
 components/
-  layout/               Header (nav responsive) y Footer
+  layout/               Header (grilla de 5 columnas) y Footer
   sections/             Hero, Stack, Timeline, Contact
-  motion/               SmoothScroll, Reveal, ScrollProgress, Aurora, Magnetic, Marquee
+  ui/                   Primitivas del diseño: Section, botones, íconos SVG
+  motion/               SmoothScroll, Reveal, ScrollProgress, BackgroundAnimation
 lib/site.ts             Fuente única de contenido
 ```
+
+## Diseño
+
+El lenguaje visual viene del portafolio original (rama `master`,
+styled-components) y se reimplementó sobre Tailwind v4:
+
+- Fondo azul noche `#0f1624` y tipografía Space Grotesk.
+- Títulos con degradado blanco → blanco 66% (`text-gradient`).
+- La tríada de marca turquesa → púrpura → naranja, que aparece en los
+  divisores de sección, en los botones de dos capas y en la animación del hero.
+- Botones cuyo degradado apagado se desvanece al pasar el mouse y deja ver
+  el degradado brillante de atrás.
+
+Los íconos son SVG inline (`components/ui/icons.tsx`): el diseño original
+usaba `react-icons`, que se reemplazó para no arrastrar la dependencia.
 
 ## Animaciones
 
 - **Scroll suave** con Lenis, integrado con los enlaces `#ancla`.
 - **Barra de progreso** de lectura arriba de todo.
 - **Reveals** al entrar en viewport (`components/motion/reveal.tsx`).
-- **Aurora**: fondo con manchas de color en movimiento y parallax sobre el scroll.
-- **Botones magnéticos** que siguen al cursor.
-- **Cinta infinita** de tecnologías, en CSS puro (sin coste por frame).
-- **Línea de tiempo** que se dibuja según el avance del scroll.
+- **Partículas del hero**: SMIL puro (`animateMotion` + `mpath`), sin coste por
+  frame en JS (`components/motion/background-animation.tsx`).
+- **Carrusel de años** con scroll snap en mobile y puntos de navegación.
 
 Todo respeta `prefers-reduced-motion`: si el sistema pide menos movimiento,
 las animaciones se desactivan.
