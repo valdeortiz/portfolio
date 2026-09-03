@@ -25,7 +25,7 @@ export function Contact() {
         <Reveal>
           <SectionTitle>Hablemos</SectionTitle>
           <SectionText>
-            ¿Tenés un proyecto en mente? Escribime y lo conversamos.
+            ¿Tenés un proyecto en mente? Escribime y lo hacemos realidad.
           </SectionText>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
@@ -69,7 +69,7 @@ export function Contact() {
             />
             <figcaption className="mt-6 text-center">
               <SectionSubText>
-                {site.name} — {site.role}
+                {site.name} <br /> {site.role}
               </SectionSubText>
             </figcaption>
           </figure>

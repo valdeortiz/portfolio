@@ -12,7 +12,7 @@ export const site = {
   location: "Asunción, Paraguay",
   /** Segunda línea del título del hero. */
   // welcome: "Bienvenido a mi portafolio",
-  tagline: "De la idea a producción.",
+  tagline: "De la idea a producción",
   description:
     "Software developer",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://valdeortiz.com",
@@ -112,22 +112,28 @@ export type Project = {
  */
 export const projects: readonly Project[] = [
   {
-    title: "Proyecto 1 (completar)",
-    description: "Completar con una descripción breve de este proyecto: qué hace y con qué se construyó.",
-    image: "/images/profile.jpeg",
+    title: "Mas Tarjeta - Billetaje electrónico",
+    description: "Plataforma de billetaje electrónico para el transporte público en Asunción, con funcionalidades de recarga de tarjetas, pago de boletos y más.",
+    image: "/images/mas.jpeg",
+    href: "https://www.mastarjeta.com.py/",
+  },
+  {
+    title: "App BASA",
+    description: "Aplicación móvil para el Banco BASA, con funcionalidades de home banking, pagos, transferencias y más.",
+    image: "/images/basa.png",
+    href: "https://play.google.com/store/apps/details?id=com.basa.basaapp&hl=en",
+  },
+  {
+    title: "Pagsa control de acceso",
+    description: "Sistema de control de acceso para Pagsa S.A. con funcionalidades de registro de entrada - salida, y gestión de usuarios.",
+    image: "/images/pagsa.jpeg",
     href: "#",
   },
   {
-    title: "Proyecto 2 (completar)",
-    description: "Completar con una descripción breve de este proyecto: qué hace y con qué se construyó.",
-    image: "/images/profile.jpeg",
-    href: "#",
-  },
-  {
-    title: "Proyecto 3 (completar)",
-    description: "Completar con una descripción breve de este proyecto: qué hace y con qué se construyó.",
-    image: "/images/profile.jpeg",
-    href: "#",
+    title: "Claro video",
+    description: "Desarrollo backend de aplicaciones web robustas y escalables para Claro Video, plataforma de streaming de alto trafico.",
+    image: "/images/claro.png",
+    href: "https://www.clarovideo.com/",
   },
 ];
 

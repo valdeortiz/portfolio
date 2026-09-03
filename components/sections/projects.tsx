@@ -53,7 +53,7 @@ export function Projects() {
       <Reveal>
         <SectionTitle>Proyectos</SectionTitle>
         <SectionText>
-          Algunas cosas que construí, de la idea al deploy.
+          De la idea al deploy
         </SectionText>
       </Reveal>
 
