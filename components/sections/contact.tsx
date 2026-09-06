@@ -10,26 +10,26 @@ import {
   SectionText,
   SectionTitle,
 } from "@/components/ui/section";
-import { site, socials } from "@/lib/site";
+import { getContent, sectionIds, site, socials, type Lang } from "@/lib/site";
 
 /**
  * Cierre del sitio. La foto va sobre el halo radial del `ImageContainer`
  * original, que en la rama master estaba definido pero sin usar.
  */
-export function Contact() {
+export function Contact({ lang }: { lang: Lang }) {
+  const t = getContent(lang);
+
   return (
-    <Section id="contacto">
+    <Section id={sectionIds.contact}>
 
       <div className="grid items-center gap-8 md:grid-cols-[1.3fr_1fr]">
         <Reveal>
-          <SectionTitle>Hablemos</SectionTitle>
-          <SectionText>
-            ¿Tenés un proyecto en mente? Escribime y lo hacemos realidad.
-          </SectionText>
+          <SectionTitle>{t.contact.title}</SectionTitle>
+          <SectionText>{t.contact.text}</SectionText>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <GradientButton href={site.whatsapp} external>
-              WhatsApp
+              {t.contact.cta}
             </GradientButton>
             <OutlineButton href={`mailto:${site.email}`}>
               {site.email}

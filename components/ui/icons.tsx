@@ -149,3 +149,101 @@ export const skillIcons = {
 
 export type SocialIconName = keyof typeof socialIcons;
 export type SkillIconName = keyof typeof skillIcons;
+
+/**
+ * Banderas del conmutador de idioma. Van en el mismo estilo que el resto:
+ * SVG inline, sin dependencias. Están simplificadas a propósito — se dibujan a
+ * ~20px de ancho, donde el detalle real (50 estrellas, el escudo del emblema)
+ * no se distingue y sólo agrega peso. A diferencia de los demás íconos, éstos
+ * no heredan `currentColor`: una bandera sin sus colores no se reconoce.
+ */
+
+const FLAG_VIEWBOX = "0 0 24 16";
+
+/** Marco de 1px para que la bandera se despegue del fondo oscuro. */
+function FlagBorder() {
+  return (
+    <rect
+      x="0.25"
+      y="0.25"
+      width="23.5"
+      height="15.5"
+      rx="1.75"
+      fill="none"
+      stroke="rgba(0,0,0,0.35)"
+      strokeWidth="0.5"
+    />
+  );
+}
+
+/** Estados Unidos: 13 franjas, cantón azul y estrellas sugeridas. */
+export function UsFlagIcon({ className }: IconProps) {
+  // 13 franjas iguales; las impares (índice 1, 3, 5…) son las blancas.
+  const stripe = 16 / 13;
+
+  return (
+    <svg
+      viewBox={FLAG_VIEWBOX}
+      className={className}
+      aria-hidden
+      focusable="false"
+    >
+      <rect width="24" height="16" fill="#b22234" />
+      {[1, 3, 5, 7, 9, 11].map((row) => (
+        <rect
+          key={row}
+          y={row * stripe}
+          width="24"
+          height={stripe}
+          fill="#ffffff"
+        />
+      ))}
+      {/* El cantón cubre las primeras siete franjas, como en el original. */}
+      <rect width="9.6" height={7 * stripe} fill="#3c3b6e" />
+      {[0, 1, 2].map((row) =>
+        [0, 1, 2, 3].map((col) => (
+          <circle
+            key={`${row}-${col}`}
+            cx={1.5 + col * 2.2}
+            cy={1.8 + row * 2.5}
+            r="0.55"
+            fill="#ffffff"
+          />
+        )),
+      )}
+      <FlagBorder />
+    </svg>
+  );
+}
+
+/** Paraguay: tres franjas y el emblema central sugerido con un círculo. */
+export function PyFlagIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox={FLAG_VIEWBOX}
+      className={className}
+      aria-hidden
+      focusable="false"
+    >
+      <rect width="24" height="16" fill="#ffffff" />
+      <rect width="24" height="5.333" fill="#d52b1e" />
+      <rect y="10.667" width="24" height="5.333" fill="#0038a8" />
+      <circle
+        cx="12"
+        cy="8"
+        r="2.1"
+        fill="#ffffff"
+        stroke="#009b3a"
+        strokeWidth="0.7"
+      />
+      <circle cx="12" cy="8" r="0.85" fill="#fedf00" />
+      <FlagBorder />
+    </svg>
+  );
+}
+
+/** Bandera por idioma, con la misma clave que `Lang` de `lib/site`. */
+export const flagIcons = {
+  es: PyFlagIcon,
+  en: UsFlagIcon,
+} as const;

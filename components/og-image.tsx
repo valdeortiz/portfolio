@@ -1,12 +1,14 @@
 import { ImageResponse } from "next/og";
-import { site } from "@/lib/site";
 
-export const alt = `${site.name} — ${site.role}`;
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+import { getContent, site, type Lang } from "@/lib/site";
+
+export const ogSize = { width: 1200, height: 630 };
+export const ogContentType = "image/png";
 
 /** Imagen que se ve al compartir el sitio en redes y WhatsApp. */
-export default function OpengraphImage() {
+export function renderOgImage(lang: Lang) {
+  const t = getContent(lang);
+
   return new ImageResponse(
     (
       <div
@@ -46,7 +48,7 @@ export default function OpengraphImage() {
             maxWidth: 900,
           }}
         >
-          {site.tagline}
+          {t.tagline}
         </div>
         <div
           style={{
@@ -60,6 +62,6 @@ export default function OpengraphImage() {
         </div>
       </div>
     ),
-    size,
+    ogSize,
   );
 }

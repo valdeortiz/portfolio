@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
 
+  experimental: {
+    /**
+     * Habilita `app/global-not-found.tsx`. Hace falta porque el sitio tiene dos
+     * root layouts (uno por idioma) y, sin esto, las URLs inexistentes caen en
+     * el 404 pelado de Next en vez del del sitio.
+     */
+    globalNotFound: true,
+  },
+
   /**
    * Cabeceras de seguridad. El sitio es estático y no maneja sesiones, así que
    * lo que hay para proteger es al visitante: que el navegador no adivine tipos

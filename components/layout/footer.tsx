@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { socialIcons } from "@/components/ui/icons";
-import { site, socials } from "@/lib/site";
+import { getContent, routes, site, socials, type Lang } from "@/lib/site";
 
 /** Enlace de columna: se corre un poco a la derecha al pasar el mouse. */
 function FooterLink({
@@ -48,35 +48,37 @@ function FooterColumn({
   );
 }
 
-export function Footer() {
+export function Footer({ lang }: { lang: Lang }) {
+  const t = getContent(lang);
+
   return (
     <footer className="mx-auto mt-2.5 w-full max-w-[1040px] px-4 pt-5 pb-10 sm:px-12">
       <div className="grid grid-cols-[repeat(3,minmax(85px,220px))] gap-[5px] border-t border-line px-1 pt-8 pb-4 sm:gap-4 md:gap-10 lg:pt-10 lg:pb-7">
-        <FooterColumn title="Teléfono">
+        <FooterColumn title={t.footer.phone}>
           <FooterLink href={site.whatsapp} external>
             {site.phone}
           </FooterLink>
         </FooterColumn>
 
-        <FooterColumn title="Email">
+        <FooterColumn title={t.footer.email}>
           <FooterLink href={`mailto:${site.email}`}>{site.email}</FooterLink>
         </FooterColumn>
 
-        <FooterColumn title="Legal">
+        <FooterColumn title={t.footer.legal}>
           {/* Requisito de Google Play para las apps publicadas. */}
-          <FooterLink href="/condiciones">Bases y condiciones</FooterLink>
+          <FooterLink href={routes[lang].terms}>{t.footer.terms}</FooterLink>
         </FooterColumn>
       </div>
 
       <div className="flex w-full max-w-[1040px] flex-col justify-between sm:flex-row">
         <div className="mb-8 flex flex-col items-center sm:mr-auto sm:mb-0 sm:flex-wrap sm:items-baseline">
           <p className="min-w-[100px] p-2.5 text-sm leading-[22px] tracking-[0.02em] text-faint sm:min-w-[280px] sm:text-base sm:leading-7 md:text-lg md:leading-[30px]">
-            {site.role} de {site.location}
+            {t.footer.role}
           </p>
         </div>
 
         <nav
-          aria-label="Redes"
+          aria-label={t.socialsLabel}
           className="flex flex-wrap items-center justify-center sm:pr-4"
         >
           {socials.map((social) => {
