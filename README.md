@@ -136,7 +136,9 @@ docker compose up -d --build
 Actualizar:
 
 ```bash
-git pull && docker compose up -d --build
+cd ~/portfolio && git pull && docker compose up -d --build
+docker image prune -f && docker builder prune -f
+
 ```
 
 Caddy termina TLS y renueva los certificados solo. `web` no publica puertos al
