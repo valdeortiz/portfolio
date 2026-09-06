@@ -22,13 +22,17 @@ Tailwind CSS v4 y Motion. Contenedorizado con Docker.
 
 ```bash
 # Desarrollo con hot reload → http://localhost:3000
-docker compose up dev
+docker compose --profile dev up dev
 
-# Producción, build optimizado → http://localhost:3000
-docker compose up --build web
+# Stack de producción completo (Next + Caddy) → https://localhost
+docker compose up --build
 ```
 
-O sin compose:
+Sin dominio configurado, Caddy sirve `localhost` con su CA interna: el
+certificado no lo firma nadie conocido, así que el navegador va a advertir y
+`curl` necesita `-k`. Es el mismo camino que en producción, sólo que sin DNS.
+
+Para probar sólo la app, sin proxy:
 
 ```bash
 docker build -t portfolio .
@@ -103,13 +107,42 @@ las animaciones se desactivan.
 
 ## Variables de entorno
 
-Copiá `.env.example` a `.env.local`:
+Copiá `.env.example` a `.env`:
 
-```
-NEXT_PUBLIC_SITE_URL=https://valdeortiz.com
+| Variable               | Para qué                                        |
+| ---------------------- | ----------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | Metadata, canonical, sitemap y Open Graph        |
+| `SITE_DOMAIN`          | Dominio que atiende Caddy                        |
+| `SITE_WWW`             | Variante con www, redirige al anterior           |
+
+`NEXT_PUBLIC_SITE_URL` es una variable `NEXT_PUBLIC_*`: Next la **inlinea en
+build-time**, no se lee en runtime. El `docker-compose.yml` la pasa como `args`
+del build justo por eso. Cambiarla exige reconstruir la imagen, no basta con
+reiniciar el contenedor.
+
+## Deploy en el VPS
+
+Requisitos: Docker con el daemon habilitado en el arranque
+(`systemctl enable docker`) y los registros `A` de `valdeortiz.com` y
+`www.valdeortiz.com` apuntando a la IP del server **antes** del primer
+`up` — si no, el challenge HTTP-01 de Let's Encrypt falla.
+
+```bash
+git clone git@github.com:valdeortiz/portfolio.git && cd portfolio
+cp .env.example .env          # y completar SITE_DOMAIN / SITE_WWW
+docker compose up -d --build
 ```
 
-Se usa para metadata, canonical, sitemap y Open Graph.
+Actualizar:
+
+```bash
+git pull && docker compose up -d --build
+```
+
+Caddy termina TLS y renueva los certificados solo. `web` no publica puertos al
+host: sale a internet únicamente a través del proxy. Los certificados viven en
+el volumen `caddy-data` — si se borra, cada redeploy vuelve a pedirlos y Let's
+Encrypt aplica rate limit.
 
 ## Historial
 

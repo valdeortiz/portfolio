@@ -1,17 +1,46 @@
 services:
-  # Producción: docker compose up --build web
+  # Producción: docker compose up -d --build
   web:
     build:
       context: .
       target: runner
+      args:
+        # NEXT_PUBLIC_* se inlinea en build-time. El `environment:` de abajo no
+        # alcanza: sin este arg el sitemap y las OG images salen con la URL por
+        # defecto de lib/site.ts.
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://valdeortiz.com}
     image: valdeortiz-portfolio:latest
-    ports:
-      - "3000:3000"
+    # Sin `ports:`: al exterior sale únicamente a través de Caddy.
+    expose:
+      - "3000"
     environment:
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://valdeortiz.com}
+    volumes:
+      # Las variantes AVIF son caras de generar; sin esto se re-encodean todas
+      # después de cada redeploy.
+      - image-cache:/app/.next/cache/images
     restart: unless-stopped
 
-  # Desarrollo con hot reload: docker compose up dev
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp" # HTTP/3
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN:-localhost}
+      SITE_WWW: ${SITE_WWW:-www.localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # `caddy-data` guarda los certificados. Si no persiste, cada redeploy pide
+      # certificados nuevos y Let's Encrypt aplica rate limit.
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - web
+    restart: unless-stopped
+
+  # Desarrollo con hot reload: docker compose --profile dev up dev
   dev:
     build:
       context: .
@@ -26,3 +55,8 @@ services:
     environment:
       NEXT_PUBLIC_SITE_URL: http://localhost:3000
     profiles: ["dev"]
+
+volumes:
+  image-cache:
+  caddy-data:
+  caddy-config:

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const terms = [
   {
     title: "Introducción",
-    body: "Bienvenido(a), una aplicación diseñada para brindarte las herramientas sin la necesidad de recoger datos sensibles.",
+    body: `Bienvenido(a). Estas bases y condiciones regulan el uso de las aplicaciones móviles publicadas por ${site.name}, diseñadas para brindarte sus herramientas sin necesidad de recoger datos sensibles.`,
   },
   {
     title: "Aceptación de Términos",

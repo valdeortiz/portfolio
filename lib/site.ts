@@ -13,8 +13,13 @@ export const site = {
   /** Segunda línea del título del hero. */
   // welcome: "Bienvenido a mi portafolio",
   tagline: "De la idea a producción",
+  /**
+   * Alimenta el <meta description>, el Open Graph y la Twitter card: es el
+   * texto que se ve en Google y en la preview al compartir el link.
+   * Conviene mantenerlo entre 120 y 160 caracteres.
+   */
   description:
-    "Software developer",
+    "Software developer en Asunción, Paraguay. Construyo APIs y servicios backend con Python, Django y FastAPI, y apps móviles con Flutter.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://valdeortiz.com",
   locale: "es_PY",
   email: "valdeortiz15@gmail.com",
