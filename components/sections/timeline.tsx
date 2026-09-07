@@ -9,9 +9,7 @@ import {
   SectionText,
   SectionTitle,
 } from "@/components/ui/section";
-import { timeline } from "@/lib/site";
-
-const TOTAL = timeline.length;
+import { getContent, sectionIds, type Lang } from "@/lib/site";
 
 /** La línea que sale de cada año, difuminándose hacia la derecha. */
 function YearLine() {
@@ -58,7 +56,11 @@ function YearLine() {
  * tiempo completa; en mobile se convierte en un carrusel con scroll snap y
  * puntos de navegación.
  */
-export function Timeline() {
+export function Timeline({ lang }: { lang: Lang }) {
+  const t = getContent(lang).about;
+  const milestones = t.milestones;
+  const total = milestones.length;
+
   const [active, setActive] = useState(0);
   const carouselRef = useRef<HTMLUListElement>(null);
   const reduceMotion = useReducedMotion();
@@ -73,15 +75,15 @@ export function Timeline() {
   const handleDotClick = (index: number) => {
     const node = carouselRef.current;
     if (!node) return;
-    scrollTo(Math.floor(node.scrollWidth * 0.7 * (index / TOTAL)));
+    scrollTo(Math.floor(node.scrollWidth * 0.7 * (index / total)));
   };
 
   const handleScroll = () => {
     const node = carouselRef.current;
     if (!node) return;
-    const index = Math.round((node.scrollLeft / (node.scrollWidth * 0.7)) * TOTAL);
+    const index = Math.round((node.scrollLeft / (node.scrollWidth * 0.7)) * total);
     // El cálculo puede pasarse de rango en los extremos del scroll.
-    setActive(Math.min(Math.max(index, 0), TOTAL - 1));
+    setActive(Math.min(Math.max(index, 0), total - 1));
   };
 
   // Al cambiar el tamaño de la ventana se vuelve al inicio: si no, veníamos de
@@ -93,26 +95,23 @@ export function Timeline() {
   }, []);
 
   return (
-    <Section id="about">
-      <SectionTitle>Cómo llegué hasta acá</SectionTitle>
-      <SectionText>
-        De los primeros proyectos de la carrera a sistemas con usuarios reales en
-        producción.
-      </SectionText>
+    <Section id={sectionIds.about}>
+      <SectionTitle>{t.title}</SectionTitle>
+      <SectionText>{t.text}</SectionText>
 
       <ul
         ref={carouselRef}
         onScroll={handleScroll}
         className="no-scrollbar mb-2 flex touch-pan-x snap-x snap-mandatory list-none overflow-x-scroll bg-canvas sm:mb-20 sm:touch-auto sm:snap-none sm:justify-between sm:overflow-visible"
       >
-        {timeline.map((milestone, index) => (
+        {milestones.map((milestone, index) => (
           <li
             key={milestone.year}
             className={clsx(
               "flex min-w-min sm:min-w-0",
               // El último nodo se estira para que el ítem final pueda quedar
               // alineado a la izquierda al hacer snap.
-              index === TOTAL - 1 && "min-w-[120%] sm:min-w-0",
+              index === total - 1 && "min-w-[120%] sm:min-w-0",
             )}
           >
             <div
@@ -140,12 +139,12 @@ export function Timeline() {
 
       {/* Navegación por puntos: sólo hace falta cuando el carrusel scrollea. */}
       <div className="mb-12 flex w-72 sm:hidden">
-        {timeline.map((milestone, index) => (
+        {milestones.map((milestone, index) => (
           <button
             key={milestone.year}
             type="button"
             onClick={() => handleDotClick(index)}
-            aria-label={`Ir a ${milestone.year}`}
+            aria-label={t.goTo(milestone.year)}
             aria-current={active === index}
             className={clsx(
               "box-border cursor-pointer border-none bg-transparent p-1 transition-transform",

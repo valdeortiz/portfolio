@@ -9,7 +9,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 
-import { projects } from "@/lib/site";
+import { getContent, projects, type Lang } from "@/lib/site";
 
 /** Velocidad del auto-scroll, en píxeles por segundo. */
 const SPEED = 45;
@@ -22,7 +22,14 @@ const useIsomorphicLayoutEffect =
  * Si el proyecto tiene href válido, todo el bloque es un link;
  * si el href está vacío o es "#", se renderiza como bloque no clickeable.
  */
-function ProjectCard({ project }: { project: (typeof projects)[number] }) {
+function ProjectCard({
+  project,
+  lang,
+}: {
+  project: (typeof projects)[number];
+  lang: Lang;
+}) {
+  const { title, description } = getContent(lang).work.items[project.id];
   const href = project.href.trim();
   const hasLink = href !== "" && href !== "#";
   const external = href.startsWith("http");
@@ -35,16 +42,16 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
       <div className="relative aspect-video w-full overflow-hidden bg-canvas">
         <Image
           src={project.image}
-          alt={project.title}
+          alt={title}
           fill
           sizes="(max-width: 640px) 16rem, 20rem"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-lg font-bold text-ink sm:text-xl">{project.title}</h3>
+        <h3 className="text-lg font-bold text-ink sm:text-xl">{title}</h3>
         <p className="mt-2 text-sm leading-[22px] text-muted sm:text-base sm:leading-7">
-          {project.description}
+          {description}
         </p>
       </div>
     </>
@@ -72,7 +79,7 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
  * escalonadas cuando la sección aparece. Respeta `prefers-reduced-motion`:
  * ahí queda como una lista con scroll manual y snap.
  */
-export function ProjectsCarousel() {
+export function ProjectsCarousel({ lang }: { lang: Lang }) {
   const reduceMotion = useReducedMotion();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLUListElement>(null);
@@ -166,8 +173,8 @@ export function ProjectsCarousel() {
     return (
       <ul className="no-scrollbar -mx-4 mb-12 flex list-none snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 sm:-mx-12 sm:px-12">
         {projects.map((project) => (
-          <li key={project.title} className="flex snap-start">
-            <ProjectCard project={project} />
+          <li key={project.id} className="flex snap-start">
+            <ProjectCard project={project} lang={lang} />
           </li>
         ))}
       </ul>
@@ -202,7 +209,7 @@ export function ProjectsCarousel() {
 
           return (
             <motion.li
-              key={`${project.title}-${i}`}
+              key={`${project.id}-${i}`}
               className="flex"
               inert={isMiddle ? undefined : true}
               initial={isMiddle ? hidden : false}
@@ -213,7 +220,7 @@ export function ProjectsCarousel() {
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} lang={lang} />
             </motion.li>
           );
         })}

@@ -64,19 +64,53 @@ todas las secciones, al SEO, al sitemap y a la imagen de Open Graph.
 
 ```
 app/
-  layout.tsx            Layout raíz: fuentes, metadata, header/footer, animaciones globales
-  page.tsx              Home: Hero → Stack → Trayectoria → Contacto
+  (es)/                 Español, en la raíz del dominio
+    layout.tsx          Root layout <html lang="es">
+    page.tsx            /            Hero → Stack → Trayectoria → Proyectos → Contacto
+    condiciones/        /condiciones Bases y condiciones (requerido por Google Play)
+    opengraph-image.tsx Imagen social generada en build
+    error.tsx           Error boundary
+  (en)/                 Inglés, bajo /en
+    layout.tsx          Root layout <html lang="en">
+    en/page.tsx         /en
+    en/terms/           /en/terms
+    en/opengraph-image.tsx
+    en/error.tsx
+  global-not-found.tsx  404 de las URLs que no existen (en los dos grupos)
   globals.css           Tokens de diseño y utilidades (Tailwind v4)
-  condiciones/          Bases y condiciones (requerido por Google Play)
-  opengraph-image.tsx   Imagen social generada en build
   sitemap.ts robots.ts  SEO
 components/
-  layout/               Header (grilla de 5 columnas) y Footer
-  sections/             Hero, Stack, Timeline, Contact
+  layout/               Header, Footer, LanguageSwitch y el documento compartido
+  pages/                Cuerpo de cada página, parametrizado por idioma
+  sections/             Hero, Stack, Timeline, Projects, Contact
   ui/                   Primitivas del diseño: Section, botones, íconos SVG
   motion/               SmoothScroll, Reveal, ScrollProgress, BackgroundAnimation
-lib/site.ts             Fuente única de contenido
+  og-image.tsx          Imagen de Open Graph compartida por los dos idiomas
+lib/site.ts             Fuente única de contenido (neutro + texto por idioma)
+lib/metadata.ts         Metadata, canonical y hreflang de cada página
 ```
+
+## Idiomas
+
+El sitio está en español e inglés, cada uno con su propia URL:
+
+| | Español | Inglés |
+| --- | --- | --- |
+| Portada | `/` | `/en` |
+| Bases y condiciones | `/condiciones` | `/en/terms` |
+
+Se cambia de idioma con la bandera de la cabecera, que lleva a la página
+equivalente en el otro idioma (no a la portada). Cada URL declara su
+`hreflang`, su `canonical` y su propia imagen de Open Graph, así que las dos
+versiones se indexan por separado y se pueden compartir sueltas.
+
+El español vive en la raíz porque es la URL ya indexada. Son dos root layouts
+—uno por grupo— en vez de un segmento `[lang]`: es la única forma de que el
+atributo `lang` del `<html>` diga la verdad en cada idioma. El precio es que
+pasar de un idioma al otro recarga la página entera.
+
+Para traducir algo, se edita `lib/site.ts`: el tipo `Content` obliga a que los
+dos idiomas tengan las mismas claves, así que no se puede olvidar una.
 
 ## Diseño
 
@@ -136,7 +170,9 @@ docker compose up -d --build
 Actualizar:
 
 ```bash
-git pull && docker compose up -d --build
+cd ~/portfolio && git pull && docker compose up -d --build
+docker image prune -f && docker builder prune -f
+
 ```
 
 Caddy termina TLS y renueva los certificados solo. `web` no publica puertos al

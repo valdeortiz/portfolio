@@ -6,19 +6,22 @@ import {
   SectionText,
   SectionTitle,
 } from "@/components/ui/section";
+import { getContent, sectionIds, type Lang } from "@/lib/site";
 
 /** Sección de proyectos: carrusel horizontal con scroll automático. */
-export function Projects() {
+export function Projects({ lang }: { lang: Lang }) {
+  const t = getContent(lang);
+
   return (
-    <Section id="proyectos">
+    <Section id={sectionIds.projects}>
       <SectionDivider className="my-10" />
 
       <Reveal>
-        <SectionTitle>Proyectos</SectionTitle>
-        <SectionText>De la idea al deploy</SectionText>
+        <SectionTitle>{t.work.title}</SectionTitle>
+        <SectionText>{t.work.text}</SectionText>
       </Reveal>
 
-      <ProjectsCarousel />
+      <ProjectsCarousel lang={lang} />
 
       <SectionDivider alt />
     </Section>
